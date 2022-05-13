@@ -1,0 +1,16 @@
+﻿kind,name,rg,tag,nsg,region,vnetIp,subnetName,subnetIp,publisher,offer,ostype,sku,type,method,rule,protocol,priority,sourceip,sourceport,destinationip,destinationport,access,direction,sourceaddressprefix
+resourcegroup,rg-test,,,,koreacentral,,,,,,,,,,,,,,,,,,,
+vnet,vnet-hub,rg-test,,,koreacentral,192.168.0.0/16,"snet-bckim1,snet-bckim2","192.168.0.0/24,192.168.1.0/24",,,,,,,,,,,,,,,,
+vnet,vnet-spoke,rg-test,,,koreacentral,10.0.0.0/16,"snet-bckim1,snet-bckim2","10.0.0.0/24,10.0.1.0/24",,,,,,,,,,,,,,,,
+subnet,snet-bckim-prd-01,rg-test,vnet-hub,nsg-bckim1,koreacentral,,,192.168.0.0/24,,,,,,,,,,,,,,,,
+subnet,snet-bckim-prd-02,rg-test,vnet-hub,nsg-bckim1,koreacentral,,,192.168.1.0/24,,,,,,,,,,,,,,,,
+subnet,snet-bckim-dev-01,rg-test,vnet-spoke,nsg-bckim2,koreacentral,,,10.0.0.0/24,,,,,,,,,,,,,,,,
+subnet,snet-bckim-dev-02,rg-test,vnet-spoke,nsg-bckim2,koreacentral,,,10.0.1.0/24,,,,,,,,,,,,,,,,
+vm,vm-bckim1,rg-test,,,koreacentral,,,,MicrosoftWindowsServer,WindowsServer,Linux,2019-datacenter-gensecond,,,,tcp,1000,211.215.58.26,*,*,22,,,
+vm,vm-bckim2,rg-test,,,koreacentral,,,,Canonical,UbuntuServer,Linux,18.04-LTS,,,,tcp,,211.215.58.26,*,*,80,,,
+nsgrule,nsgrule-bckim1,rg-test,snet-bckim-prd-02,nsg-bckim1,koreacentral,,,,,,,,,,,tcp,100,211.215.58.26,*,*,"80,22",Allow,Inbound,Internet
+nsgrule,nsgrule-bckim2,rg-test,snet-bckim-dev-02,nsg-bckim2,koreacentral,,,,,,,,,,,tcp,200,211.215.58.26,*,*,"22,80",Allow,Inbound,Internet
+nsg,nsg-bckim1,rg-test,snet-bckim-prd-02,nsgrule-bckim1,koreacentral,,,,,,,,,,,,,,,,,,,
+nsg,nsg-bckim2,rg-test,snet-bckim-dev-02,nsgrule-bckim2,koreacentral,,,,,,,,,,,,,,,,,,,
+nic,nic-bckim1,rg-test,,,koreacentral,,,,,,,,,,,,,,,,,,,
+nic,nic-bckim2,rg-test,,,koreacentral,,,,,,,,,,,,,,,,,,,
