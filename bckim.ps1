@@ -21,6 +21,7 @@ foreach ($nsg in $nsgs) {
         -Location $nsg.region
 }
 
+
 foreach ($nsgrule in $nsgrules) {
     $nsg = Get-AzNetworkSecurityGroup `
         -Name $nsgrule.nsg `
